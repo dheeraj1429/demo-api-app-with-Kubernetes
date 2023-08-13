@@ -40,6 +40,8 @@ app.post("/task", (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.get("/get-task", (req: Request, res: Response, next: NextFunction) => {
+  console.log(process.env.SECRET);
+
   fs.readFile(
     path.join(__dirname, "task.txt"),
     "utf-8",
@@ -47,7 +49,7 @@ app.get("/get-task", (req: Request, res: Response, next: NextFunction) => {
       if (err) {
         console.log(err);
       }
-      return res.status(200).json({ message: data });
+      return res.status(200).json({ message: data, tag: "new" });
     }
   );
 });

@@ -19,8 +19,19 @@ spec:
     spec:
       containers:
         - name: node-api-app
-          image: dheeraj1429/node-demo-api:v2
+          image: dheeraj1429/node-demo-api:v3
           imagePullPolicy: Always
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: PORT
+            - name: SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: SECRET
           livenessProbe:
             httpGet:
               path: /
