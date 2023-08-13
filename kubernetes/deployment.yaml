@@ -6,15 +6,11 @@ metadata:
     app: demo-api-app
     type: server
 spec:
-  #number of replicas generated
-  replicas: 1
-
+  replicas: 2
   selector:
-    #assigns labels to the pods for future selection
     matchLabels:
       name: node-api-app
       tier: server
-
   template:
     metadata:
       labels:
@@ -24,6 +20,13 @@ spec:
       containers:
         - name: node-api-app
           image: dheeraj1429/node-demo-api:v2
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            periodSeconds: 10
+            initialDelaySeconds: 5
           resources:
             limits:
               memory: 512Mi
@@ -31,3 +34,10 @@ spec:
             requests:
               memory: 256Mi
               cpu: "0.2"
+          volumeMounts:
+            - mountPath: /app/dist/task
+              name: task
+      volumes:
+        - name: task
+          persistentVolumeClaim:
+            claimName: host-persistent-volume-claim
