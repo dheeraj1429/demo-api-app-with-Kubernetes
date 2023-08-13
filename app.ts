@@ -52,6 +52,10 @@ app.get("/get-task", (req: Request, res: Response, next: NextFunction) => {
   );
 });
 
+app.get("/exit", (req: Request, res: Response, next: NextFunction) => {
+  process.exit(1);
+});
+
 app.listen(port, () => {
   console.log("listening on port " + port);
 });

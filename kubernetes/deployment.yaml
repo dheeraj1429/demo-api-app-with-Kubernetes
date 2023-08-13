@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-api-app
+  labels:
+    app: demo-api-app
+    type: server
+spec:
+  #number of replicas generated
+  replicas: 1
+
+  selector:
+    #assigns labels to the pods for future selection
+    matchLabels:
+      name: node-api-app
+      tier: server
+
+  template:
+    metadata:
+      labels:
+        name: node-api-app
+        tier: server
+    spec:
+      containers:
+        - name: node-api-app
+          image: dheeraj1429/node-demo-api:v2
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
